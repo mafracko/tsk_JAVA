@@ -6,84 +6,94 @@ import java.util.List;
 
 public class Main {
 	
-	public static void main(String[] args) throws TemperatureOutOfBoundsException {
-		WashingMachine beko1 = new Beko();
-		WashingMachine amica1 = new Amica();
-		WashingMachine whirpool1 = new Whirpool();
+	public static void main(String[] args) throws TemperatureOutOfRangeException {
+		WashingMachine beko = new Beko();
+		WashingMachine amica = new Amica();
+		WashingMachine whirpool = new Whirpool();
 		
 		System.out.println("Excercise 1:");
-		beko1.setProgram(20);
-		beko1.showStatus();
+		beko.setProgram(20);
+		beko.showStatus();
 		
 		System.out.println();
 		System.out.println("Excercise 2:");
-		beko1.setProgram(20);
-		beko1.nextProgram();
-		beko1.showStatus();
+		beko.setProgram(20);
+		beko.nextProgram();
+		beko.showStatus();
 		
-		beko1.previousProgram();
-		beko1.showStatus();
+		beko.previousProgram();
+		beko.showStatus();
 		
 		System.out.println();
 		System.out.println("Excercise 3:");
-		amica1.setTemperature(50.5);
-		amica1.showStatus();
-		amica1.tempUp();
-		amica1.tempDown();
+		amica.setTemperature(50.5);
+		amica.showStatus();
+		amica.tempUp();
+		amica.tempDown();
 		
 		System.out.println();
 		System.out.println("Excercise 4:");
-		beko1.setTemperature(45.7);
-		beko1.showStatus();
-		amica1.setTemperature(34.9);
-		amica1.showStatus();
+		beko.setTemperature(45.7);
+		beko.showStatus();
+		amica.setTemperature(34.9);
+		amica.showStatus();
 		
 		System.out.println();
 		System.out.println("Excercise 5,6:");
-		amica1.setTemperature(89.5);
-		amica1.tempUp();
+		amica.setTemperature(89.5);
+		amica.tempUp();
 		
 		try {
-			amica1.tempUp();
-		} catch (TemperatureOutOfBoundsException e) {
-			System.out.println("Unable to change temperature!");
+			amica.tempUp();
+		} catch (TemperatureOutOfRangeException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Unable to change temperature over 90" + "\u00b0" + "C");
+		}
+		amica.setTemperature(0.0);
+		try {
+			amica.tempDown();
+		} catch (TemperatureOutOfRangeException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Unable to change temperature below 0" + "\u00b0" + "C");
 		}
 		
 		System.out.println();
 		System.out.println("Excercise 7:");
-		amica1.setV(800);
-		amica1.showStatus();
-		amica1.downV();
-		amica1.showStatus();
-		amica1.upV();
-		amica1.showStatus();
+		amica.setV(0);
+		amica.showStatus();
+		amica.downV();
+		amica.showStatus();
+		amica.upV();
+		amica.showStatus();
 		
 		System.out.println();
 		System.out.println("Excercise 8:");
-		amica1.showStatus();
+		
+		amica.showStatus();
 		
 		System.out.println();
 		System.out.println("Excercise 9:");
-		System.out.println("Names of washingmachines: " + amica1.getNameMark() + " " + beko1.getNameMark() + " " + whirpool1.getNameMark());
+		System.out.println("Names of washingmachines: " + amica.getNameMark() + ", " + beko.getNameMark() + ", " + whirpool.getNameMark());
 		
 		System.out.println();
 		System.out.println("Excercise 10:");
-		beko1.setTemperature(50.5);
-		beko1.showStatus();
-		beko1.tempUp();
-		beko1.tempDown();
+		beko.setTemperature(50.5);
+		beko.showStatus();
+		beko.tempUp();
+		beko.tempDown();
 		
 		System.out.println();
 		System.out.println("Excercise 11:");
-		whirpool1.setProgram(1);
-		whirpool1.showStatus();
-		whirpool1.previousProgram();
-		whirpool1.showStatus();
-		whirpool1.nextProgram();
-		whirpool1.showStatus();
+		whirpool.setProgram(1);
+		whirpool.showStatus();
+		whirpool.previousProgram();
+		whirpool.showStatus();
+		whirpool.nextProgram();
+		whirpool.showStatus();
 		
 		System.out.println();
 		System.out.println("Excercise 13:");
+		
 		List<WashingMachine> allWashingMachine = new ArrayList<>();
 		allWashingMachine.add(new Beko());
 		allWashingMachine.add(new Whirpool());
@@ -91,11 +101,12 @@ public class Main {
 		
 		System.out.println("Washingmachines marks before sort: ");
 		printAllWashingMachine(allWashingMachine);
-		Collections.sort(allWashingMachine, (a, b) -> a.nameMark.toString()
-				.compareTo(b.nameMark.toString()));
+		Collections.sort(allWashingMachine, (a, b) -> a.getNameMark()
+				.toString()
+				.compareTo(b.getNameMark()
+						.toString()));
 		System.out.println("Washingmachines marks after sort: ");
 		printAllWashingMachine(allWashingMachine);
-		
 	}
 	
 	public static void printAllWashingMachine(List<WashingMachine> washingmachine) {

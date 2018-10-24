@@ -1,15 +1,19 @@
 package washingmachine;
 
-public class WashingMachine {
+public abstract class WashingMachine {
 	
-	protected NamesOfMarks	nameMark;
-	protected int			maxProgram		= 20;
-	protected int			numberOfProgram;
-	protected double		temperature;
-	protected double		maxTemperature	= 90;
-	protected int			maxSpeedSpin	= 1000;
-	protected int			speedSpin;
-	protected double		temperatureJump	= 0.5;
+	private static final double	MAX_TEMPERATURE	= 90;
+	private static final int	MAX_SPEED_SPIN	= 1000;
+	private NamesOfMarks		nameMark;
+	protected int				maxProgram		= 20;
+	private int					numberOfProgram	= 1;
+	protected double			temperatureJump	= 0.5;
+	private double				temperature;
+	private int					speedSpin;
+	
+	public WashingMachine(NamesOfMarks namesOfMarks) {
+		this.nameMark = namesOfMarks;
+	}
 	
 	public NamesOfMarks getNameMark() {
 		return nameMark;
@@ -34,6 +38,14 @@ public class WashingMachine {
 		
 	}
 	
+	public int getMaxProgram() {
+		return maxProgram;
+	}
+	
+	public void setMaxProgram(int maxProgram) {
+		this.maxProgram = maxProgram;
+	}
+	
 	public void previousProgram() {
 		if (numberOfProgram > 1) {
 			setProgram(numberOfProgram - 1);
@@ -43,7 +55,7 @@ public class WashingMachine {
 	}
 	
 	public void setTemperature(double temperature) {
-		if (temperature >= 0 && temperature <= maxTemperature) {
+		if (temperature >= 0 && temperature <= MAX_TEMPERATURE) {
 			this.temperature = Math.round(temperature * 2) / 2.0;
 		}
 	}
@@ -60,27 +72,27 @@ public class WashingMachine {
 		this.temperatureJump = temperatureJump;
 	}
 	
-	public void tempUp() throws TemperatureOutOfBoundsException {
-		if (temperature <= maxTemperature - temperatureJump) {
+	public void tempUp() throws TemperatureOutOfRangeException {
+		if (temperature <= MAX_TEMPERATURE - temperatureJump) {
 			setTemperature(temperature + temperatureJump);
 			System.out.println("Current temperature : " + temperature + "\u00b0" + "C");
 		} else {
-			throw new TemperatureOutOfBoundsException();
+			throw new TemperatureOutOfRangeException();
 		}
 	}
 	
-	public void tempDown() throws TemperatureOutOfBoundsException {
+	public void tempDown() throws TemperatureOutOfRangeException {
 		if (temperature >= temperatureJump) {
 			setTemperature(temperature - temperatureJump);
 			System.out.println("Current temperature: " + temperature + "\u00b0" + "C");
 		} else {
-			throw new TemperatureOutOfBoundsException();
+			throw new TemperatureOutOfRangeException();
 		}
 		
 	}
 	
 	public void setV(int speedSpin) {
-		if (speedSpin >= 0 && speedSpin <= maxSpeedSpin) {
+		if (speedSpin >= 0 && speedSpin <= MAX_SPEED_SPIN) {
 			this.speedSpin = speedSpin;
 		}
 	}
@@ -90,7 +102,7 @@ public class WashingMachine {
 	}
 	
 	public void upV() {
-		if (speedSpin <= maxSpeedSpin - 100) {
+		if (speedSpin <= MAX_SPEED_SPIN - 100) {
 			setV(speedSpin + 100);
 		} else
 			speedSpin = 0;
@@ -107,14 +119,6 @@ public class WashingMachine {
 	public void showStatus() {
 		System.out.println("Washingmachine mark: " + nameMark + ", number of program: " + numberOfProgram + ", temperature: " + temperature + ", speedspin: " + speedSpin + ".");
 		
-	}
-	
-	public int getMaxProgram() {
-		return maxProgram;
-	}
-	
-	public void setMaxProgram(int maxProgram) {
-		this.maxProgram = maxProgram;
 	}
 	
 }

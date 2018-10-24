@@ -3,8 +3,7 @@ package washingmachine;
 public class Beko extends WashingMachine {
 	
 	public Beko() {
-		super();
-		this.nameMark = NamesOfMarks.BEKO;
+		super(NamesOfMarks.BEKO);
 		this.temperatureJump = 1;
 	}
 }
